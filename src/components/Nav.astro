@@ -1,9 +1,17 @@
 ---
-
+import NavLink from "@components/ui/links/NavLink.astro";
 ---
 
-<nav>
+<Header>
   <div class="max-w-5xl mx-auto px-3 py-3 flex items-center justify-between h-16">
+    <a href="/" class="font-bold text-xl hover:text-hot-pink">Creek</a>
+    <a href="/search" class="">
+    <a href="/" class="font-bold text-xl hover:text-hot-pink">Creek</a>
+    <a href="/search" class="">
+    <a href="/" class="font-bold text-xl hover:text-hot-pink">Creek</a>
+    <a href="/search" class="">
+    <a href="/" class="font-bold text-xl hover:text-hot-pink">Creek</a>
+    <a href="/search" class="">
     <a href="/" class="font-bold text-xl hover:text-hot-pink">Creek</a>
     <a href="/search" class="">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -13,4 +21,176 @@
     </a>
   </div>
   <div class="w-full border-b-2 border-black squiggle"></div>
-</nav>
+<nav class="w-full bg-yellow-400 max-w-[85rem] w-full mx-auto md:flex md:items-center md:justify-between md:gap-3 py-2 px-4 sm:px-6 lg:px-8"
+    <div class="flex items-center justify-between">
+      <!-- Brand logo -->
+      <!-- Collapse toggle for smaller screens -->
+      <div class="ml-auto mr-5 md:hidden">
+        <button
+          type="button"
+          class="hs-collapse-toggle flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-neutral-600 transition duration-300 hover:bg-neutral-200 disabled:pointer-events-none disabled:opacity-50 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:outline-none"
+          data-hs-collapse="#navbar-collapse-with-animation"
+          aria-controls="navbar-collapse-with-animation"
+          aria-label="Toggle navigation"
+        >
+          <svg
+            class="h-[1.25rem] w-[1.25rem] flex-shrink-0 hs-collapse-open:hidden"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="3" x2="21" y1="6" y2="6"></line>
+            <line x1="3" x2="21" y1="12" y2="12"></line>
+            <line x1="3" x2="21" y1="18" y2="18"></line>
+          </svg>
+          <svg
+            class="hidden h-[1.25rem] w-[1.25rem] flex-shrink-0 hs-collapse-open:block"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      <!-- ThemeIcon component specifically for smaller screens -->
+    </div>
+    <!-- Contains navigation links -->
+    <div
+      id="navbar-collapse-with-animation"
+      class="hs-collapse hidden grow basis-full overflow-hidden transition-all duration-300 md:block"
+    >
+      <!-- Navigation links container -->
+        <div
+          class="flex flex-col justify-center md:flex-row md:justify-center md:items-center gap-0.5 md:gap-6"
+        >
+          <!-- Render navigation links with NavLink component -->
+          {navBarLinks.map((link) => (
+            <NavLink url={link.url} name={link.name} subLinks={link.subLinks} />
+          ))}
+      </div>
+    </div>
+  </nav>
+</Header>
+<!-- Theme Appearance script to manage light/dark modes -->
+<script is:inline>
+  const HSThemeAppearance = {
+    init() {
+      const defaultTheme = "default";
+      let theme = localStorage.getItem("hs_theme") || defaultTheme;
+
+      if (document.querySelector("html").classList.contains("dark")) return;
+      this.setAppearance(theme);
+    },
+    _resetStylesOnLoad() {
+      const $resetStyles = document.createElement("style");
+      $resetStyles.innerText = `*{transition: unset !important;}`;
+      $resetStyles.setAttribute("data-hs-appearance-onload-styles", "");
+      document.head.appendChild($resetStyles);
+      return $resetStyles;
+    },
+    setAppearance(theme, saveInStore = true, dispatchEvent = true) {
+      const $resetStylesEl = this._resetStylesOnLoad();
+
+      if (saveInStore) {
+        localStorage.setItem("hs_theme", theme);
+      }
+
+      if (theme === "auto") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "default";
+      }
+
+      document.querySelector("html").classList.remove("dark");
+      document.querySelector("html").classList.remove("default");
+      document.querySelector("html").classList.remove("auto");
+
+      document
+        .querySelector("html")
+        .classList.add(this.getOriginalAppearance());
+
+      setTimeout(() => {
+        $resetStylesEl.remove();
+      });
+
+      if (dispatchEvent) {
+        window.dispatchEvent(
+          new CustomEvent("on-hs-appearance-change", { detail: theme }),
+        );
+      }
+    },
+    getAppearance() {
+      let theme = this.getOriginalAppearance();
+      if (theme === "auto") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "default";
+      }
+      return theme;
+    },
+    getOriginalAppearance() {
+      const defaultTheme = "default";
+      return localStorage.getItem("hs_theme") || defaultTheme;
+    },
+  };
+  HSThemeAppearance.init();
+
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", () => {
+      if (HSThemeAppearance.getOriginalAppearance() === "auto") {
+        HSThemeAppearance.setAppearance("auto", false);
+      }
+    });
+
+  window.addEventListener("load", () => {
+    const $clickableThemes = document.querySelectorAll(
+      "[data-hs-theme-click-value]",
+    );
+    const $switchableThemes = document.querySelectorAll(
+      "[data-hs-theme-switch]",
+    );
+
+    $clickableThemes.forEach(($item) => {
+      $item.addEventListener("click", () =>
+        HSThemeAppearance.setAppearance(
+          $item.getAttribute("data-hs-theme-click-value"),
+          true,
+          $item,
+        ),
+      );
+    });
+
+    $switchableThemes.forEach(($item) => {
+      $item.addEventListener("change", (e) => {
+        HSThemeAppearance.setAppearance(e.target.checked ? "dark" : "default");
+      });
+
+      $item.checked = HSThemeAppearance.getAppearance() === "dark";
+    });
+
+    window.addEventListener("on-hs-appearance-change", (e) => {
+      $switchableThemes.forEach(($item) => {
+        $item.checked = e.detail === "dark";
+      });
+    });
+  });
+</script>
+<!--Import the necessary Collapse and Overlay plugins-->
+<!--https://preline.co/plugins/html/collapse.html-->
+<!--https://preline.co/plugins/html/overlay.html-->
+<script>
+  import "@preline/collapse/index.js";
+  import "@preline/overlay/index.js";
+</script>
