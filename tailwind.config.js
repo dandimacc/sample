@@ -2,6 +2,7 @@ module.exports = {
   content: [
     "./public/**/*.html",
     "./src/**/*.{astro,js,jsx,svelte,ts,tsx,vue}",
+    "./node_modules/preline/preline.js",
   ],
   important: true,
   theme: {
