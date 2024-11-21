@@ -116,3 +116,22 @@ if (subLinks && subLinks.length > 0) {
 <script>
   import "@preline/dropdown/index.js";
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const url = window.location.pathname;
+    const navId = url === "/" ? "home" : url.split("/")[1];
+
+    // Highlight the active link
+    const nav = document.getElementById(navId);
+    if (nav) {
+      nav.classList.remove(
+        "text-neutral-600",
+        "dark:text-neutral-400",
+        "hover:text-neutral-500",
+        "dark:hover:text-neutral-500"
+      );
+      nav.classList.add("text-orange-400", "dark:text-orange-300");
+      nav.setAttribute("aria-current", "page");
+    }
+  });
+</script>
