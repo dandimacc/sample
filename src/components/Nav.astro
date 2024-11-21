@@ -85,7 +85,7 @@ export interface Props {
           class="flex flex-col justify-center md:flex-row md:justify-center md:items-center gap-0.5 md:gap-6"
         >
           <!-- Render navigation links with NavLink component -->
-          {navBarLinks.map((link) => (
+          {NavLinks.map((link) => (
             <NavLink url={link.url} name={link.name} subLinks={link.subLinks} />
           ))}
       </div>
