@@ -2,6 +2,12 @@
 import NavLink from './Link/NavLink.astro'
 const { strings, homeUrl } = Astro.props;
 
+interface NavLinkProps {
+  name: string;
+  url: string;
+  subLinks?: Props[];
+}
+
 ---
 
 <nav>
