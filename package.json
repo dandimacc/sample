@@ -20,6 +20,12 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.5",
     "@astrojs/sitemap": "^3.2.0",
+    "@preline/accordion": "^2.5.0",
+    "@preline/collapse": "^2.5.0",
+    "@preline/dropdown": "^2.5.0",
+    "@preline/overlay": "^2.5.0",
+    "@preline/tabs": "^2.5.0",
+    "preline": "^2.5.1",
     "autoprefixer": "^10.4.19",
     "dayjs": "^1.11.12",
     "lunr": "^2.3.9",
